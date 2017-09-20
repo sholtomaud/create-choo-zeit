@@ -33,7 +33,7 @@ exports.writePackage = function (dir, cb) {
       "deploy": "now -e NODE_ENV=\"production\"",
       "dev": "bankai start ./scripts/index.js",
       "inspect": "bankai inspect index.js",
-      "start": "micro",
+      "start": "serve ./dist --single",
       "test": "standard && npm run test-deps",
       "test-deps": "dependency-check . && dependency-check . --extra --no-dev -i tachyons"
     }
@@ -73,7 +73,7 @@ exports.writeReadme = function (dir, cb) {
     ## Commands
     Command                | Description                                      |
     -----------------------|--------------------------------------------------|
-    \`$ npm start\`        | Start the micro server
+    \`$ npm start\`        | Start the file server
     \`$ npm run dev\`      | Start the development server
     \`$ npm run deploy\`   | Deploy with now
     \`$ npm test\`         | Lint, validate deps & run tests

@@ -184,13 +184,13 @@ function create (dir, argv) {
 
         The following commands are available:
           ${clr('npm run dev', 'cyan')}      Start the development server
-          ${clr('npm start', 'cyan')}        Start the micro server
+          ${clr('npm start', 'cyan')}        Start the file server
           ${clr('npm run deploy', 'cyan')}   Deploy using now
           ${clr('npm test', 'cyan')}         Lint, validate deps & run tests
           ${clr('npm run build', 'cyan')}    Compile all files to ${clr('dist/', 'green')}
           ${clr('npm run inspect', 'cyan')}  Inspect the bundle dependencies
 
-        Do you enjoy using this software? Become a backer:
+        Do you enjoy using choo? Become a backer:
         ${clr('https://opencollective.com/choo', 'cyan')}
       `.replace(/\n$/g, '')
       print('\n' + msg)
