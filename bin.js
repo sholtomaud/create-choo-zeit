@@ -1,19 +1,19 @@
 #!/usr/bin/env node
 
-var mapLimit = require('async-collection/map-limit')
-var series = require('async-collection/series')
-var ansi = require('ansi-escape-sequences')
-var minimist = require('minimist')
-var dedent = require('dedent')
-var rimraf = require('rimraf')
-var path = require('path')
+let mapLimit = require('async-collection/map-limit')
+let series = require('async-collection/series')
+let ansi = require('ansi-escape-sequences')
+let minimist = require('minimist')
+let dedent = require('dedent')
+let rimraf = require('rimraf')
+let path = require('path')
 
-var lib = require('./')
+let lib = require('./')
 
-var TRAIN = '🚂🚋🚋'
+let TRAIN = '🚂🚋🚋'
 
-var USAGE = `
-  $ ${clr('create-choo-app', 'bold')} ${clr('<project-directory>', 'green')} [options]
+let USAGE = `
+  $ ${clr('create-choo-zeit', 'bold')} ${clr('<project-directory>', 'green')} [options]
 
   Options:
 
@@ -24,26 +24,26 @@ var USAGE = `
   Examples:
 
     Create a new Choo application
-    ${clr('$ create-choo-app', 'cyan')}
+    ${clr('$ create-choo-zeit', 'cyan')}
 
   Running into trouble? Feel free to file an issue:
-  ${clr('https://github.com/choojs/create-choo-app/issues/new', 'cyan')}
+  ${clr('https://github.com/choojs/create-choo-zeit/issues/new', 'cyan')}
 
   Do you enjoy using this software? Become a backer:
   ${clr('https://opencollective.com/choo', 'cyan')}
 `.replace(/\n$/, '').replace(/^\n/, '')
 
-var NODIR = `
+let NODIR = `
   Please specify the project directory:
-    ${clr('$ create-choo-app', 'cyan')} ${clr('<project-directory>', 'green')}
+    ${clr('$ create-choo-zeit', 'cyan')} ${clr('<project-directory>', 'green')}
 
   For example:
-    ${clr('$ create-choo-app', 'cyan')} ${clr('my-choo-app', 'green')}
+    ${clr('$ create-choo-zeit', 'cyan')} ${clr('my-choo-app', 'green')}
 
-  Run ${clr('create-choo-app --help', 'cyan')} to see all options.
+  Run ${clr('create-choo-zeit --help', 'cyan')} to see all options.
 `.replace(/\n$/, '').replace(/^\n/, '')
 
-var argv = minimist(process.argv.slice(2), {
+let argv = minimist(process.argv.slice(2), {
   alias: {
     help: 'h',
     quiet: 'q',
@@ -57,7 +57,7 @@ var argv = minimist(process.argv.slice(2), {
 })
 
 ;(function main (argv) {
-  var dir = argv._[0]
+  let dir = argv._[0]
 
   if (argv.help) {
     console.log(USAGE)
@@ -72,14 +72,15 @@ var argv = minimist(process.argv.slice(2), {
 })(argv)
 
 function create (dir, argv) {
-  var written = []
-  var cmds = [
+  let written = []
+  let scriptsDir = path.join(dir,'scripts');
+  let cmds = [
     function (done) {
       print('Creating a new Choo app in ' + clr(dir, 'green') + '.\n')
       lib.mkdir(dir, done)
     },
     function (done) {
-      var filename = 'package.json'
+      let filename = 'package.json'
       printFile(filename)
       written.push(path.join(dir, filename))
       lib.writePackage(dir, done)
@@ -87,79 +88,80 @@ function create (dir, argv) {
     function (done) {
       print('\nInstalling packages, this might take a couple of minutes.')
       written.push(path.join(dir, 'node_modules'))
-      var pkgs = [
+      let pkgs = [
         'choo@next',
         'choo-log',
         'choo-devtools',
         'choo-service-worker',
         'sheetify',
-        'tachyons'
+        'tachyons',
+        'serve'
       ]
-      var msg = clrInstall(pkgs)
+      let msg = clrInstall(pkgs)
       print('Installing ' + msg + '…')
       lib.install(dir, pkgs, done)
     },
     function (done) {
-      var pkgs = [
+      let pkgs = [
         'bankai@next',
         'dependency-check',
         'standard'
       ]
-      var msg = clrInstall(pkgs)
+      let msg = clrInstall(pkgs)
       print('Installing ' + msg + '…')
       lib.devInstall(dir, pkgs, done)
     },
     function (done) {
       print('')
-      var filename = '.gitignore'
+      let filename = '.gitignore'
       printFile(filename)
       written.push(path.join(dir, filename))
       lib.writeIgnore(dir, done)
     },
     function (done) {
-      var filename = 'README.md'
+      let filename = 'README.md'
       printFile(filename)
       written.push(path.join(dir, filename))
       lib.writeReadme(dir, done)
     },
     function (done) {
-      var filename = 'index.js'
+      let filename = 'index.js'
       printFile(filename)
-      written.push(path.join(dir, filename))
-      lib.writeIndex(dir, done)
+      written.push(path.join(scriptsDir, filename))
+      lib.writeIndex(scriptsDir, done)
     },
     function (done) {
-      var filename = 'sw.js'
+      let filename = 'sw.js'
       printFile(filename)
-      written.push(path.join(dir, filename))
-      lib.writeServiceWorker(dir, done)
+      written.push(path.join(scriptsDir, filename))
+      lib.writeServiceWorker(scriptsDir, done)
     },
     function (done) {
-      var filename = 'views/main.js'
+      let filename = 'views/main.js'
       printFile(filename)
-      written.push(path.join(dir, filename))
-      lib.writeMainView(dir, done)
+      written.push(path.join(scriptsDir, filename))
+      lib.writeMainView(scriptsDir, done)
     },
     function (done) {
-      var filename = 'views/404.js'
+      let filename = 'views/404.js'
       printFile(filename)
-      written.push(path.join(dir, filename))
-      lib.writeNotFoundView(dir, done)
+      written.push(path.join(scriptsDir, filename))
+      lib.writeNotFoundView(scriptsDir, done)
     },
     function (done) {
-      var filename = 'manifest.json'
+      let filename = 'manifest.json'
       printFile(filename)
-      written.push(path.join(dir, filename))
-      lib.writeManifest(dir, done)
+      written.push(path.join(scriptsDir, filename))
+      lib.writeManifest(scriptsDir, done)
     },
     function (done) {
-      var filename = 'assets/icon.png'
+      let filename = 'assets/icon.png'
       printFile(filename)
       written.push(path.join(dir, filename))
       lib.writeIcon(dir, done)
     },
     function (done) {
-      var message = 'The train has departed! :steam_locomotive::train::train::train:'
+      let message = 'The train has departed! :steam_locomotive::train::train::train:'
       print('\nInitializing ' + clr('git', 'cyan'))
       written.push(path.join(dir, '.git'))
       lib.createGit(dir, message, done)
@@ -176,12 +178,14 @@ function create (dir, argv) {
         process.exit(1)
       })
     } else {
-      var msg = dedent`
+      let msg = dedent`
         App created in ${clr(dir, 'green')}.
         ${clr('All done, good job!', 'magenta')} ${TRAIN}
 
         The following commands are available:
-          ${clr('npm start', 'cyan')}        Start the development server
+          ${clr('npm run dev', 'cyan')}      Start the development server
+          ${clr('npm start', 'cyan')}        Start the micro server
+          ${clr('npm run deploy', 'cyan')}   Deploy using now
           ${clr('npm test', 'cyan')}         Lint, validate deps & run tests
           ${clr('npm run build', 'cyan')}    Compile all files to ${clr('dist/', 'green')}
           ${clr('npm run inspect', 'cyan')}  Inspect the bundle dependencies

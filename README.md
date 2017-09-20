@@ -1,8 +1,9 @@
-# create-choo-app [![stability][0]][1]
+# create-choo-app for zeit
+[![stability][0]][1]
 [![npm version][2]][3] [![build status][4]][5]
 [![downloads][8]][9] [![js-standard-style][10]][11]
 
-Create a fresh choo application. It installs [choo](https://github.com/choojs/choo), along with:
+Create a fresh choo application for use with zeit. It installs [choo](https://github.com/choojs/choo), along with:
 
 - [bankai](https://github.com/choojs/bankai), an asset bundler and static file server
 - [sheetify](https://github.com/stackcss/sheetify/), a CSS bundler
@@ -10,16 +11,17 @@ Create a fresh choo application. It installs [choo](https://github.com/choojs/ch
 - [choo-service-worker](https://github.com/choojs/choo-service-worker), for offline support
 - [tachyons](http://tachyons.io/), a minimalist CSS toolkit
 - [standard](https://standardjs.com/), a JavaScript linter
+- [serve](https://www.npmjs.com/package/serve), a zeit file server
 - [dependency-check](https://github.com/maxogden/dependency-check), to verify your dependencies are listed in `package.json`
 
 ## Usage
 ```sh
-$ npx create-choo-app <project-directory>
+$ npx create-choo-zeit <project-directory>
 ```
 
 ## API
 ```txt
-  $ create-choo-app <project-directory> [options]
+  $ create-choo-zeit <project-directory> [options]
 
   Options:
 
@@ -30,13 +32,11 @@ $ npx create-choo-app <project-directory>
   Examples:
 
     Create a new Choo application
-    $ create-choo-app
+    $ create-choo-zeit
 
   Running into trouble? Feel free to file an issue:
-  https://github.com/choojs/create-choo-app/issues/new
+  https://github.com/shotlom/create-choo-zeit/issues/new
 
-  Do you enjoy using this software? Become a backer:
-  https://opencollective.com/choo
 ```
 
 ## License
@@ -44,13 +44,13 @@ $ npx create-choo-app <project-directory>
 
 [0]: https://img.shields.io/badge/stability-experimental-orange.svg?style=flat-square
 [1]: https://nodejs.org/api/documentation.html#documentation_stability_index
-[2]: https://img.shields.io/npm/v/create-choo-app.svg?style=flat-square
-[3]: https://npmjs.org/package/create-choo-app
-[4]: https://img.shields.io/travis/choojs/create-choo-app/master.svg?style=flat-square
-[5]: https://travis-ci.org/choojs/create-choo-app
-[6]: https://img.shields.io/codecov/c/github/choojs/create-choo-app/master.svg?style=flat-square
-[7]: https://codecov.io/github/choojs/create-choo-app
-[8]: http://img.shields.io/npm/dm/create-choo-app.svg?style=flat-square
-[9]: https://npmjs.org/package/create-choo-app
+[2]: https://img.shields.io/npm/v/create-choo-zeit.svg?style=flat-square
+[3]: https://npmjs.org/package/create-choo-zeit
+[4]: https://img.shields.io/travis/choojs/create-choo-zeit/master.svg?style=flat-square
+[5]: https://travis-ci.org/choojs/create-choo-zeit
+[6]: https://img.shields.io/codecov/c/github/choojs/create-choo-zeit/master.svg?style=flat-square
+[7]: https://codecov.io/github/choojs/create-choo-zeit
+[8]: http://img.shields.io/npm/dm/create-choo-zeit.svg?style=flat-square
+[9]: https://npmjs.org/package/create-choo-zeit
 [10]: https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square
 [11]: https://github.com/feross/standard

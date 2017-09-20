@@ -3,7 +3,7 @@ var dedent = require('dedent')
 var mkdirp = require('mkdirp')
 var path = require('path')
 var pump = require('pump')
-var fs = require('fs')
+var fs = require('fs-extra')
 
 var TRAIN = '🚂🚋🚋'
 
@@ -27,9 +27,13 @@ exports.writePackage = function (dir, cb) {
     "version": "1.0.0",
     "private": true,
     "scripts": {
-      "build": "bankai build index.js",
+      "build": "npm run build:bankai && npm run build:sw",
+      "build:bankai": "bankai build ./scripts/index.js -H [-H \"<link rel=\"manifest\" href=\"/manifest.json\">\"]",
+      "build:sw": "cp ./scripts/manifest.json ./dist/ && cp ./scripts/sw.js ./dist/",
+      "deploy": "now -e NODE_ENV=\"production\"",
+      "dev": "bankai start ./scripts/index.js",
       "inspect": "bankai inspect index.js",
-      "start": "bankai start index.js",
+      "start": "micro",
       "test": "standard && npm run test-deps",
       "test-deps": "dependency-check . && dependency-check . --extra --no-dev -i tachyons"
     }
@@ -69,7 +73,9 @@ exports.writeReadme = function (dir, cb) {
     ## Commands
     Command                | Description                                      |
     -----------------------|--------------------------------------------------|
-    \`$ npm start\`        | Start the development server
+    \`$ npm start\`        | Start the micro server
+    \`$ npm run dev\`      | Start the development server
+    \`$ npm run deploy\`   | Deploy with now
     \`$ npm test\`         | Lint, validate deps & run tests
     \`$ npm run build\`    | Compile all files into \`dist/\`
     \`$ npm run inspect\`  | Inspect the bundle's dependencies
@@ -298,7 +304,7 @@ function pushd (dir) {
 }
 
 function write (filename, file, cb) {
-  fs.writeFile(filename, file, function (err) {
+  fs.outputFile(filename, file, function (err) {
     if (err) return cb(new Error('Could not write file ' + filename))
     cb()
   })

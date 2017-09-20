@@ -1,7 +1,7 @@
 {
-  "name": "create-choo-app",
+  "name": "create-choo-zeit",
   "description": "Create a fresh choo application",
-  "repository": "choojs/create-choo-app",
+  "repository": "shotlom/create-choo-zeit",
   "version": "1.6.1",
   "bin": {
     "create-choo-app": "./bin.js"
@@ -16,6 +16,7 @@
     "ansi-escape-sequences": "^3.0.0",
     "async-collection": "^1.0.1",
     "dedent": "^0.7.0",
+    "fs-extra": "^4.0.2",
     "minimist": "^1.2.0",
     "mkdirp": "^0.5.1",
     "pump": "^1.0.2",
