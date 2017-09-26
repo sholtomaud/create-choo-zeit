@@ -27,9 +27,7 @@ exports.writePackage = function (dir, cb) {
     "version": "1.0.0",
     "private": true,
     "scripts": {
-      "build": "npm run build:bankai && npm run build:sw",
-      "build:bankai": "bankai build ./scripts/index.js -H [-H \"<link rel=\"manifest\" href=\"/manifest.json\">\"]",
-      "build:sw": "cp ./scripts/manifest.json ./dist/ && cp ./scripts/sw.js ./dist/",
+      "build": "bankai build ./scripts/index.js",
       "deploy": "npx now -e NODE_ENV=\"production\" --public",
       "dev": "bankai start ./scripts/index.js",
       "inspect": "bankai inspect index.js",
