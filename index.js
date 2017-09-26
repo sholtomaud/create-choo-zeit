@@ -27,9 +27,9 @@ exports.writePackage = function (dir, cb) {
     "version": "1.0.0",
     "private": true,
     "scripts": {
-      "build": "bankai build ./index.js",
+      "build": "export NODE_ENV=production && bankai build index.js",
       "deploy": "npx now -e NODE_ENV=\"production\" --public",
-      "dev": "bankai start ./index.js",
+      "dev": "bankai start index.js",
       "inspect": "bankai inspect index.js",
       "start": "serve ./dist --single",
       "test": "standard && npm run test-deps",
