@@ -2,7 +2,7 @@
   "name": "create-choo-zeit",
   "description": "Create a fresh choo application",
   "repository": "shotlom/create-choo-zeit",
-  "version": "1.8.0",
+  "version": "1.8.1",
   "bin": {
     "create-choo-app": "./bin.js"
   },
