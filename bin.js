@@ -73,7 +73,7 @@ let argv = minimist(process.argv.slice(2), {
 
 function create (dir, argv) {
   let written = []
-  let scriptsDir = path.join(dir,'scripts');
+  let scriptsDir = dir;
   let cmds = [
     function (done) {
       print('Creating a new Choo app in ' + clr(dir, 'green') + '.\n')
