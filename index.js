@@ -94,6 +94,7 @@ exports.writeIndex = function (dir, cb) {
     if (process.env.NODE_ENV !== 'production') {
       app.use(require('choo-devtools')())
       app.use(require('choo-log')())
+      app.use(require('choo-service-worker')('./sw.js'))
     } else {
       // Enable service workers by default.
       app.use(require('choo-service-worker')('../sw.js'))
