@@ -103,7 +103,7 @@ function create (dir, argv) {
     },
     function (done) {
       let pkgs = [
-        'github:choojs/bankai#new-new-new',
+        'bankai',
         'dependency-check',
         'standard'
       ]
