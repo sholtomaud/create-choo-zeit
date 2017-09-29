@@ -103,7 +103,7 @@ function create (dir, argv) {
     },
     function (done) {
       let pkgs = [
-        'bankai',
+        'bankai@9.0.0-rc1',
         'dependency-check',
         'standard'
       ]
