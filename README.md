@@ -15,8 +15,16 @@ Create a fresh choo application for use with zeit. It installs [choo](https://gi
 - [dependency-check](https://github.com/maxogden/dependency-check), to verify your dependencies are listed in `package.json`
 
 ## Usage
+Example of how to install a test choo.js app locally.
+
 ```sh
 $ npx create-choo-zeit <project-directory>
+```
+
+Example of how to install the test locally and then deploy the test app to zeit. It should all just work.
+
+```sh
+$ npx create-choo-zeit <project-directory> && cd <project-directory>  && npm run deploy
 ```
 
 ## API
