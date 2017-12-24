@@ -88,9 +88,8 @@ function create (dir, argv) {
     function (done) {
       print('\nInstalling packages, this might take a couple of minutes.')
       written.push(path.join(dir, 'node_modules'))
-      let pkgs = [
-        'choo@next',
-        'choo-log',
+      var pkgs = [
+        'choo',
         'choo-devtools',
         'choo-service-worker',
         'sheetify',
@@ -102,8 +101,9 @@ function create (dir, argv) {
       lib.install(dir, pkgs, done)
     },
     function (done) {
-      let pkgs = [
-        'bankai@9.0.0-rc11',
+      var pkgs = [
+        'bankai',
+        'choo-scaffold',
         'dependency-check',
         'standard'
       ]
@@ -131,7 +131,13 @@ function create (dir, argv) {
       lib.writeIndex(scriptsDir, done)
     },
     function (done) {
-      let filename = 'sw.js'
+      var filename = 'stores/clicks.js'
+      printFile(filename)
+      written.push(path.join(dir, filename))
+      lib.writeStore(dir, done)
+    },
+    function (done) {
+      var filename = 'sw.js'
       printFile(filename)
       written.push(path.join(scriptsDir, filename))
       lib.writeServiceWorker(scriptsDir, done)

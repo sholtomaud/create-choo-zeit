@@ -30,6 +30,7 @@ exports.writePackage = function (dir, cb) {
       "build": "export NODE_ENV=production && bankai build index.js",
       "deploy": "npx now -e NODE_ENV=\"production\" --public",
       "dev": "bankai start index.js",
+      "create": "choo-scaffold",
       "inspect": "bankai inspect index.js",
       "start": "serve ./dist --single",
       "test": "standard && npm run test-deps",
@@ -65,8 +66,8 @@ exports.writeReadme = function (dir, cb) {
     ## Routes
     Route              | File               | Description                     |
     -------------------|--------------------|---------------------------------|
-    \`/\`              | \`views/main.js\`  | The main view
-    \`/*\`             | \`views/404.js\`   | Display unhandled routes
+    \`/\`                | \`views/main.js\`    | The main view
+    \`/*\`               | \`views/404.js\`     | Display unhandled routes
 
     ## Commands
     Command                | Description                                      |
@@ -76,6 +77,8 @@ exports.writeReadme = function (dir, cb) {
     \`$ npm run deploy\`   | Deploy with now
     \`$ npm test\`         | Lint, validate deps & run tests
     \`$ npm run build\`    | Compile all files into \`dist/\`
+    \`$ npm run inspect\`  | Inspect the bundle's dependencies
+    \`$ npm run create\`   | Generate a scaffold file
     \`$ npm run inspect\`  | Inspect the bundle's dependencies
   `
 
@@ -87,18 +90,20 @@ exports.writeIndex = function (dir, cb) {
   var file = dedent`
     var css = require('sheetify')
     var choo = require('choo')
+    var store = require('./stores/clicks')
 
     css('tachyons')
 
     var app = choo()
     if (process.env.NODE_ENV !== 'production') {
       app.use(require('choo-devtools')())
-      app.use(require('choo-log')())
-      // app.use(require('choo-service-worker')('./sw.js'))
     } else {
-      // Don't enable service workers by default.
-      // app.use(require('choo-service-worker')('../sw.js'))
+      // Enable once you want service workers support. At the moment you'll
+      // need to insert the file names yourself & bump the dep version by hand.
+      // app.use(require('choo-service-worker')())
     }
+
+    app.use(store)
 
     app.route('/', require('./views/main'))
     app.route('/*', require('./views/404'))
@@ -195,9 +200,11 @@ exports.writeNotFoundView = function (dir, cb) {
           <h1 class="f-headline pa3 pa4-ns">
             404 - route not found
           </h1>
-          <a href="/" class="link black underline">
-            Back to main
-          </a>
+          <div class="ph3 ph4-ns">
+            <a href="/" class="link black underline">
+              Back to main
+            </a>
+          </div>
         </body>
       \`
     }\n
@@ -221,15 +228,27 @@ exports.writeMainView = function (dir, cb) {
 
     function view (state, emit) {
       if (state.title !== TITLE) emit(state.events.DOMTITLECHANGE, TITLE)
+
       return html\`
         <body class="sans-serif">
           <h1 class="f-headline pa3 pa4-ns">
             Choo choo!
           </h1>
+
+          <div class="ph3 ph4-ns">
+            <p>Current number of clicks: \${state.totalClicks}</p>
+
+            <button class="f5 dim br-pill ph3 pv2 mb2 dib white bg-hot-pink bn pointer" onclick=\${handleClick}>Click Me!</button>
+          </div>
         </body>
       \`
+
+      function handleClick () {
+        emit('clicks:add', 1)
+      }
     }\n
   `
+  file = file.replace(/\\\$/g, '$')
 
   mkdirp(dirname, function (err) {
     if (err) return cb(new Error('Could not create directory ' + dirname))
@@ -249,6 +268,29 @@ exports.writeIcon = function (dir, cb) {
       if (err) return cb(new Error('Could not write file ' + filename))
       cb()
     })
+  })
+}
+
+exports.writeStore = function (dir, cb) {
+  var filename = path.join(dir, 'stores/clicks.js')
+  var file = dedent`
+    module.exports = store
+
+    function store (state, emitter) {
+      state.totalClicks = 0
+
+      emitter.on('DOMContentLoaded', function () {
+        emitter.on('clicks:add', function (count) {
+          state.totalClicks += count
+          emitter.emit(state.events.RENDER)
+        })
+      })
+    }\n
+  `
+
+  mkdirp(path.dirname(filename), function (err) {
+    if (err) return cb(err)
+    write(filename, file, cb)
   })
 }
 
