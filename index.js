@@ -117,7 +117,7 @@ exports.writeServiceWorker = function (dir, cb) {
     /* global self */
 
     var VERSION = require('./package.json').version
-    var FILES = process.env.FILE_LIST
+    var URLS = process.env.FILE_LIST
 
     // Respond with cached resources
     self.addEventListener('fetch', function (e) {
@@ -133,7 +133,6 @@ exports.writeServiceWorker = function (dir, cb) {
         return cache.addAll(URLS)
       }))
     })
-
 
     // Remove outdated resources
     self.addEventListener('activate', function (e) {
