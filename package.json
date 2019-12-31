@@ -13,19 +13,19 @@
     "test-fast": "rm -rf tmp && ./bin.js tmp test"
   },
   "dependencies": {
-    "ansi-escape-sequences": "^3.0.0",
+    "ansi-escape-sequences": "^5.1.2",
     "async-collection": "^1.0.1",
     "dedent": "^0.7.0",
-    "inquirer": "^5.0.1",
-    "fs-extra": "^4.0.2",
+    "fs-extra": "^8.1.0",
+    "inquirer": "^7.0.1",
     "minimist": "^1.2.0",
     "mkdirp": "^0.5.1",
-    "pump": "^1.0.2",
-    "rimraf": "^2.6.1"
+    "pump": "^3.0.0",
+    "rimraf": "^3.0.0"
   },
   "devDependencies": {
-    "dependency-check": "~2.6.0",
-    "standard": "^10.0.2"
+    "dependency-check": "^4.1.0",
+    "standard": "^14.3.1"
   },
   "keywords": [
     "generate",
